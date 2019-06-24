@@ -11,8 +11,7 @@ SELECT EmpFirstName, EmpLastName, EmpPhoneNumber FROM Employees
 
 
 --3
-SELECT DISTINCT CategoryID FROM Products
-WHERE QuantityOnHand IS NOT NULL AND QuantityOnHand > 0
+SELECT DISTINCT CategoryDescription FROM Categories
 
 
 --4
@@ -86,3 +85,15 @@ SELECT OrderNumber, DATEDIFF(day, OrderDate, ShipDate) AS DaysToShip FROM Orders
 SELECT * FROM seq
 OPTION (MAXRECURSION 10000)
 
+--2
+;WITH weekends AS(
+ SELECT CAST('2019-01-01' AS date) as [days]
+ UNION ALL
+ SELECT DATEADD(dd,1,[days]) FROM weekends
+ WHERE DATEADD(dd,1,[days]) <= CAST('2019-12-31' AS date)
+) 
+
+SELECT COUNT([days]) Total, DATENAME(dw, [days]) AS [days] FROM weekends
+WHERE DATENAME(dw,[days]) = 'Sunday' OR DATENAME(dw,[days]) = 'Saturday'
+GROUP BY DATENAME (dw,[days])
+OPTION (MAXRECURSION 365)
