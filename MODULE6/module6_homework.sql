@@ -17,6 +17,7 @@ SELECT productID,
 	   city,
 	   ROW_NUMBER() OVER (partition by city  order by [name]) AS ROW_NUM
 FROM products
+ORDER BY [city]
 
 
 --3
@@ -27,6 +28,7 @@ SELECT productID,
 	   ROW_NUMBER() OVER (partition by city  order by [name]) AS ROW_NUM
 FROM products) AS city1
 WHERE ROW_NUM = 1
+ORDER BY [city]
 
 --4
 SELECT productID,
